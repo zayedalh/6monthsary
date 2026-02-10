@@ -1,113 +1,913 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My First Website</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>6 Months 🤍</title>
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0f0f14;
-      color: #ffffff;
+    :root{
+      --pink:#ff4fa3;
+      --pink2:#ff8cc8;
+      --white:#ffffff;
+      --soft:#fff2f8;
+      --text:#5a1240;
+      --muted:#7a2a5c;
+      --card:#ffffffcc;
+      --card2:#ffffffee;
+      --line:#ffd1e6;
+      --shadow: 0 18px 50px rgba(255, 79, 163, .20);
+      --shadow2: 0 10px 30px rgba(255, 79, 163, .16);
+      --radius: 26px;
     }
 
-    header {
-      padding: 20px;
-      background: #15151d;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 600px at 15% 10%, rgba(255,79,163,.18), transparent 55%),
+        radial-gradient(900px 600px at 85% 20%, rgba(255,140,200,.20), transparent 55%),
+        linear-gradient(180deg, #fff, #ffe6f2 45%, #fff2f8 100%);
+      overflow-x:hidden;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 20px;
+    /* Floating hearts background */
+    .hearts{
+      position:fixed; inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:0;
+    }
+    .heart{
+      position:absolute;
+      width:16px; height:16px;
+      transform: rotate(45deg);
+      opacity:.22;
+      animation: floatUp linear infinite;
+      filter: drop-shadow(0 10px 18px rgba(255,79,163,.15));
+    }
+    .heart::before, .heart::after{
+      content:"";
+      position:absolute;
+      width:16px; height:16px;
+      background: linear-gradient(180deg, var(--pink2), var(--pink));
+      border-radius:50%;
+    }
+    .heart::before{ left:-8px; top:0; }
+    .heart::after{ left:0; top:-8px; }
+    .heart{ background: linear-gradient(180deg, var(--pink2), var(--pink)); }
+
+    @keyframes floatUp{
+      from{ transform: translateY(110vh) rotate(45deg) scale(.8); }
+      to{ transform: translateY(-15vh) rotate(45deg) scale(1.2); }
     }
 
-    nav a {
-      color: #aaa;
-      text-decoration: none;
-      margin-left: 15px;
-      font-size: 14px;
+    /* Layout */
+    .wrap{
+      position:relative;
+      z-index:1;
+      min-height:100%;
+      display:flex;
+      flex-direction:column;
     }
 
-    nav a:hover {
-      color: #fff;
+    .topbar{
+      position:sticky; top:0;
+      z-index:5;
+      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.70);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar__inner{
+      width:min(1040px, 92%);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 0;
+      gap:12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .brand .dot{
+      width:12px; height:12px;
+      border-radius:999px;
+      background: linear-gradient(90deg, var(--pink), var(--pink2));
+      box-shadow: 0 0 35px rgba(255,79,163,.30);
+    }
+    .navlinks{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .chip{
+      padding:8px 12px;
+      border-radius:999px;
+      background: rgba(255,255,255,.75);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease;
+      user-select:none;
+    }
+    .chip:hover{ transform: translateY(-1px); background: rgba(255,255,255,.92); }
+
+    .container{ width:min(1040px, 92%); margin:0 auto; padding:26px 0 40px; }
+    .screen{ display:none; }
+    .screen.is-active{ display:block; }
+
+    .card{
+      background: var(--card2);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:22px;
     }
 
-    .hero {
-      min-height: 90vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 40px;
+    /* Intro screen */
+    .intro{
+      min-height: calc(100vh - 58px);
+      display:grid;
+      place-items:center;
+      padding: 30px 0 40px;
     }
-
-    .hero h2 {
-      font-size: 40px;
-      margin-bottom: 15px;
+    .intro__box{
+      text-align:center;
+      padding:28px;
+      border-radius: 34px;
+      background: rgba(255,255,255,.82);
+      border:1px solid var(--line);
+      box-shadow: var(--shadow);
+      width:min(680px, 96%);
+      position:relative;
+      overflow:hidden;
     }
-
-    .hero p {
-      max-width: 500px;
-      margin: 0 auto 30px;
-      color: #ccc;
+    .intro__box::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(140px 140px at 10% 20%, rgba(255,79,163,.16), transparent 60%),
+        radial-gradient(160px 160px at 85% 25%, rgba(255,140,200,.18), transparent 60%);
+      pointer-events:none;
     }
-
-    .btn {
-      background: #6c5ce7;
-      border: none;
-      color: white;
-      padding: 14px 28px;
-      border-radius: 30px;
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(32px, 5vw, 56px);
+      letter-spacing:-.6px;
+      position:relative;
+    }
+    .sub{
+      margin:0 auto 18px;
+      max-width: 520px;
+      color: var(--muted);
+      line-height:1.75;
+      position:relative;
+    }
+    .bigbtn{
+      border:0;
+      cursor:pointer;
+      padding: 14px 22px;
+      border-radius: 999px;
       font-size: 16px;
-      cursor: pointer;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(90deg, var(--pink), var(--pink2));
+      box-shadow: 0 12px 30px rgba(255,79,163,.25);
+      transition: transform .12s ease, filter .12s ease;
+      position:relative;
+    }
+    .bigbtn:hover{ transform: translateY(-1px); filter:brightness(1.03); }
+    .tiny{
+      margin-top:14px;
+      font-size:12.5px;
+      color: rgba(122,42,92,.80);
+      position:relative;
     }
 
-    .btn:hover {
-      background: #8578ff;
+    /* Dashboard */
+    .dashhead{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:16px;
+    }
+    .dashhead h2{
+      margin:0;
+      font-size: 26px;
+      letter-spacing:-.3px;
+    }
+    .dashhead p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+      max-width: 560px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .tile{
+      grid-column: span 6;
+      background: var(--card);
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow2);
+      padding:18px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .tile:hover{ transform: translateY(-2px); background: rgba(255,255,255,.95); }
+    .tile h3{ margin:0 0 6px; font-size:18px; }
+    .tile p{ margin:0; color:var(--muted); line-height:1.65; font-size:14px; }
+    .badge{
+      position:absolute;
+      top:14px; right:14px;
+      font-size:12px;
+      font-weight:900;
+      color:#fff;
+      background: linear-gradient(90deg, var(--pink), var(--pink2));
+      padding:8px 10px;
+      border-radius: 999px;
+      box-shadow: 0 10px 20px rgba(255,79,163,.18);
+    }
+    @media (max-width: 860px){
+      .tile{ grid-column: span 12; }
+      .navlinks{ display:none; }
     }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #15151d;
-      font-size: 12px;
-      color: #777;
+    /* Sections */
+    .sectionTitle{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .sectionTitle h2{ margin:0; font-size:24px; letter-spacing:-.3px; }
+    .back{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.8);
+      color:var(--muted);
+      border-radius:999px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .back:hover{ background: rgba(255,255,255,.95); color:var(--text); }
+
+    .letter{
+      white-space: pre-wrap;
+      line-height:1.9;
+      color: rgba(90,18,64,.88);
+      font-size:15.5px;
+    }
+    .sig{ margin-top:14px; font-weight:900; }
+
+    .timeline{
+      display:grid;
+      gap:10px;
+    }
+    .titem{
+      padding:14px;
+      border:1px dashed rgba(255,79,163,.35);
+      background: rgba(255,255,255,.72);
+      border-radius: 18px;
+    }
+    .titem b{ display:block; margin-bottom:6px; }
+    .reasons{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:12px;
+    }
+    .reason{
+      padding:14px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      border-radius: 18px;
+      box-shadow: 0 8px 18px rgba(255,79,163,.10);
+    }
+    @media (max-width: 860px){
+      .reasons{ grid-template-columns: 1fr; }
+    }
+
+    /* Surprise */
+    .revealBox{
+      padding:16px;
+      border-radius: 18px;
+      border:1px solid rgba(255,79,163,.28);
+      background: rgba(255,255,255,.72);
+    }
+    .secret{
+      display:none;
+      margin-top:12px;
+      padding:14px;
+      border-radius: 16px;
+      background: rgba(255,79,163,.08);
+      border:1px dashed rgba(255,79,163,.35);
+      line-height:1.8;
+      color: rgba(90,18,64,.92);
+    }
+    .secret.is-open{ display:block; }
+
+    /* Message box */
+    textarea{
+      width:100%;
+      border-radius:18px;
+      border:1px solid var(--line);
+      padding:14px;
+      outline:none;
+      font-family: inherit;
+      font-size:14.5px;
+      line-height:1.7;
+      background: rgba(255,255,255,.86);
+      color: var(--text);
+      box-shadow: 0 10px 20px rgba(255,79,163,.08);
+      resize: vertical;
+      min-height: 140px;
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .btn{
+      border:0;
+      cursor:pointer;
+      padding: 12px 14px;
+      border-radius: 999px;
+      font-weight: 900;
+      color:#fff;
+      background: linear-gradient(90deg, var(--pink), var(--pink2));
+      box-shadow: 0 10px 24px rgba(255,79,163,.20);
+    }
+    .btn:hover{ filter:brightness(1.03); }
+    .btn2{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.85);
+      color:var(--muted);
+      border-radius:999px;
+      padding: 10px 12px;
+      cursor:pointer;
+      font-weight:800;
+    }
+
+    /* Easter eggs */
+    .eggs{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:12px;
+      justify-content:center;
+    }
+    .egg{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.78);
+      cursor:pointer;
+      user-select:none;
+      transition: transform .12s ease, background .12s ease;
+      box-shadow: 0 8px 18px rgba(255,79,163,.10);
+    }
+    .egg:hover{ transform: translateY(-1px); background: rgba(255,255,255,.95); }
+    .hint{
+      font-size:12.5px;
+      color: rgba(122,42,92,.90);
+      text-align:center;
+      margin-top:10px;
+    }
+
+    /* Pixel block (Minecraft-ish) */
+    .pixel{
+      width:18px; height:18px;
+      image-rendering: pixelated;
+      background:
+        linear-gradient(#6b8b4a,#6b8b4a) 0 0/100% 33%,
+        linear-gradient(#8b5a2b,#8b5a2b) 0 33%/100% 67%;
+      border: 2px solid rgba(90,18,64,.20);
+      border-radius: 4px;
+      box-shadow: 0 8px 14px rgba(0,0,0,.07);
+      position:relative;
+      overflow:hidden;
+    }
+    .pixel::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(2px 2px at 25% 20%, rgba(255,255,255,.35), transparent 60%),
+        radial-gradient(2px 2px at 62% 18%, rgba(255,255,255,.25), transparent 60%),
+        radial-gradient(2px 2px at 80% 30%, rgba(255,255,255,.18), transparent 60%);
+      opacity:.9;
+    }
+
+    /* Creeper-style face (original) */
+    .creep{
+      width:18px; height:18px;
+      background: #2ecc71;
+      border-radius: 4px;
+      border:2px solid rgba(90,18,64,.20);
+      position:relative;
+      image-rendering: pixelated;
+    }
+    .creep:before, .creep:after{
+      content:"";
+      position:absolute;
+      background:#1b5e36;
+    }
+    .creep:before{ /* eyes */
+      left:3px; top:4px; width:4px; height:4px;
+      box-shadow: 8px 0 0 #1b5e36;
+    }
+    .creep:after{ /* mouth */
+      left:6px; top:10px; width:6px; height:5px;
+      box-shadow: -3px -1px 0 #1b5e36, 3px -1px 0 #1b5e36;
+    }
+
+    /* Sea friend (Ponyo-ish vibe) */
+    .fish{
+      width:18px; height:18px;
+      position:relative;
+      border-radius: 999px;
+      background: linear-gradient(180deg, #ff6b6b, #ff3d7f);
+      border:2px solid rgba(90,18,64,.20);
+      box-shadow: 0 8px 14px rgba(255,79,163,.15);
+    }
+    .fish:before{ /* tail */
+      content:"";
+      position:absolute;
+      right:-6px; top:5px;
+      width:0; height:0;
+      border-left:8px solid #ff3d7f;
+      border-top:4px solid transparent;
+      border-bottom:4px solid transparent;
+      filter:brightness(1.02);
+    }
+    .fish:after{ /* eye */
+      content:"";
+      position:absolute;
+      left:5px; top:6px;
+      width:3px; height:3px;
+      background:#fff;
+      border-radius:999px;
+      box-shadow: 1px 1px 0 rgba(0,0,0,.20);
+    }
+
+    /* Cats */
+    .cats{
+      display:flex; gap:6px; align-items:center;
+    }
+    .catSvg{
+      width:20px; height:20px;
+      display:block;
+      filter: drop-shadow(0 8px 12px rgba(0,0,0,.10));
+    }
+
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,.92);
+      border:1px solid var(--line);
+      color: var(--muted);
+      padding:12px 14px;
+      border-radius: 999px;
+      box-shadow: var(--shadow2);
+      z-index:20;
+      display:none;
+      max-width:min(640px, 92%);
+      text-align:center;
+      font-weight:800;
+    }
+    .toast.show{ display:block; }
+    .footer{
+      text-align:center;
+      padding: 24px 0 34px;
+      color: rgba(122,42,92,.80);
+      font-size:12px;
     }
   </style>
 </head>
 
 <body>
+  <!-- floating hearts -->
+  <div class="hearts" id="hearts"></div>
 
-  <header>
-    <h1>My Website</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">About</a>
-      <a href="#">Contact</a>
-    </nav>
-  </header>
-
-  <section class="hero">
-    <div>
-      <h2>Hello, I’m Live 🚀</h2>
-      <p>
-        This website is hosted directly from GitHub Pages.
-        No backend. No setup. Just code.
-      </p>
-      <button class="btn" onclick="alert('It works!')">
-        Click me
-      </button>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="topbar__inner">
+        <div class="brand"><span class="dot"></span> 6 months 🤍</div>
+        <div class="navlinks">
+          <div class="chip" data-go="intro">Intro</div>
+          <div class="chip" data-go="dashboard">Dashboard</div>
+          <div class="chip" data-go="A">A</div>
+          <div class="chip" data-go="B">B</div>
+          <div class="chip" data-go="F">F</div>
+          <div class="chip" data-go="H">H</div>
+          <div class="chip" data-go="I">I</div>
+        </div>
+      </div>
     </div>
-  </section>
 
-  <footer>
-    © 2026 – Hosted with GitHub Pages
-  </footer>
+    <div class="container">
+      <!-- INTRO SCREEN -->
+      <section class="screen is-active" id="screen-intro">
+        <div class="intro">
+          <div class="intro__box">
+            <h1>Hi my love 🤍</h1>
+            <p class="sub">
+              I made you a tiny little website.
+              It’s pink, soft, and full of small surprises… like us.
+            </p>
 
+            <button class="bigbtn" id="goHomeBtn">Home 🤍</button>
+            <div class="tiny">Press Home when you’re ready.</div>
+
+            <div class="eggs" style="margin-top:18px;">
+              <div class="egg" id="egg1" title="Tap me 🙂">
+                <span class="pixel"></span>
+                <span>tiny block</span>
+              </div>
+              <div class="egg" id="egg2" title="Tap me 🙂">
+                <span class="fish"></span>
+                <span>sea friend</span>
+              </div>
+              <div class="egg" id="egg3" title="Tap me 🙂">
+                <span class="cats">
+                  <!-- black cat -->
+                  <svg class="catSvg" viewBox="0 0 64 64" aria-hidden="true">
+                    <path fill="#1b1b1b" d="M18 22l-6-8 2-6 10 8h16l10-8 2 6-6 8v6c0 12-9 22-22 22S18 40 18 28v-6z"/>
+                    <circle cx="26" cy="30" r="3" fill="#fff"/>
+                    <circle cx="38" cy="30" r="3" fill="#fff"/>
+                    <circle cx="26" cy="30" r="1.2" fill="#000"/>
+                    <circle cx="38" cy="30" r="1.2" fill="#000"/>
+                    <path d="M32 34c3 0 5 2 5 4 0 2-2 4-5 4s-5-2-5-4c0-2 2-4 5-4z" fill="#2b2b2b"/>
+                  </svg>
+                  <!-- white cat -->
+                  <svg class="catSvg" viewBox="0 0 64 64" aria-hidden="true">
+                    <path fill="#ffffff" d="M18 22l-6-8 2-6 10 8h16l10-8 2 6-6 8v6c0 12-9 22-22 22S18 40 18 28v-6z"/>
+                    <path fill="#ffd1e6" opacity=".8" d="M22 46c3 2 6 3 10 3s7-1 10-3c-3 6-7 10-10 10s-7-4-10-10z"/>
+                    <circle cx="26" cy="30" r="3" fill="#4a4a4a"/>
+                    <circle cx="38" cy="30" r="3" fill="#4a4a4a"/>
+                    <circle cx="26" cy="30" r="1.2" fill="#000"/>
+                    <circle cx="38" cy="30" r="1.2" fill="#000"/>
+                    <path d="M32 34c3 0 5 2 5 4 0 2-2 4-5 4s-5-2-5-4c0-2 2-4 5-4z" fill="#ffd1e6"/>
+                  </svg>
+                </span>
+                <span>two cats</span>
+              </div>
+            </div>
+
+            <div class="hint">There are more easter eggs on the dashboard too 👀</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section class="screen" id="screen-dashboard">
+        <div class="dashhead">
+          <div>
+            <h2>Dashboard 🤍</h2>
+            <p>
+              Choose what you want to open. Each one is a little piece of “us”.
+            </p>
+          </div>
+          <div class="hint" id="todayText" style="margin:0;"></div>
+        </div>
+
+        <div class="grid">
+          <div class="tile" data-open="A">
+            <div class="badge">A</div>
+            <h3>Love Letter</h3>
+            <p>Short, honest, and only for you.</p>
+          </div>
+          <div class="tile" data-open="B">
+            <div class="badge">B</div>
+            <h3>Timeline</h3>
+            <p>Little moments that built our six months.</p>
+          </div>
+          <div class="tile" data-open="F">
+            <div class="badge">F</div>
+            <h3>Reasons I Love You</h3>
+            <p>The things I notice… and never want to forget.</p>
+          </div>
+          <div class="tile" data-open="H">
+            <div class="badge">H</div>
+            <h3>Final Surprise</h3>
+            <p>Open when your heart is ready.</p>
+          </div>
+          <div class="tile" data-open="I">
+            <div class="badge">I</div>
+            <h3>Your Message</h3>
+            <p>Write something here. It stays on your device.</p>
+          </div>
+          <div class="tile" id="eggDash">
+            <div class="badge">✨</div>
+            <h3>Secret Corner</h3>
+            <p>Tap for a tiny surprise. (Pixel + sea + cats)</p>
+          </div>
+        </div>
+
+        <div class="footer">Made with love • Pink & white edition</div>
+      </section>
+
+      <!-- A: LOVE LETTER -->
+      <section class="screen" id="screen-A">
+        <div class="sectionTitle">
+          <h2>A — Love Letter</h2>
+          <button class="back" data-back>← Back to Dashboard</button>
+        </div>
+
+        <div class="card">
+          <div class="letter" id="letterText">
+Hey my love…
+
+Happy 6 months.
+
+I don’t want a perfect love story.
+I want the real one — the one where we learn each other, protect each other,
+and keep choosing each other even on the days we’re tired.
+
+You matter to me in a way that’s hard to explain.
+Not just the cute moments…
+Even your quiet moments.
+Even your heavy moments.
+
+If there’s one thing I want you to always remember:
+you don’t have to carry life alone.
+
+I’m here.
+Always.
+
+          </div>
+          <div class="sig">— Zayed</div>
+        </div>
+      </section>
+
+      <!-- B: TIMELINE -->
+      <section class="screen" id="screen-B">
+        <div class="sectionTitle">
+          <h2>B — Timeline</h2>
+          <button class="back" data-back>← Back to Dashboard</button>
+        </div>
+
+        <div class="card">
+          <p style="margin:0 0 12px; color:var(--muted); line-height:1.7;">
+            We’ll customize these together. For now, here are placeholders.
+          </p>
+
+          <div class="timeline" id="timeline">
+            <div class="titem"><b>Month 1</b> The beginning — when “us” started feeling real.</div>
+            <div class="titem"><b>Month 2</b> Small routines — little things that became ours.</div>
+            <div class="titem"><b>Month 3</b> Understanding — learning how to love better.</div>
+            <div class="titem"><b>Month 4</b> Trust — choosing each other on hard days too.</div>
+            <div class="titem"><b>Month 5</b> Softness — more calm, more “home” in each other.</div>
+            <div class="titem"><b>Month 6</b> Today — still here, still us, still strong.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- F: REASONS -->
+      <section class="screen" id="screen-F">
+        <div class="sectionTitle">
+          <h2>F — Reasons I Love You</h2>
+          <button class="back" data-back>← Back to Dashboard</button>
+        </div>
+
+        <div class="card">
+          <p style="margin:0 0 12px; color:var(--muted); line-height:1.7;">
+            These are placeholders — we’ll rewrite them in your exact words.
+          </p>
+
+          <div class="reasons" id="reasons">
+            <div class="reason">You feel deeply — and you still try.</div>
+            <div class="reason">Your softness is strength, not weakness.</div>
+            <div class="reason">You notice the small things.</div>
+            <div class="reason">You make “home” a feeling, not a place.</div>
+            <div class="reason">You push through life even when it’s heavy.</div>
+            <div class="reason">You’re you… and that’s enough.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- H: SURPRISE -->
+      <section class="screen" id="screen-H">
+        <div class="sectionTitle">
+          <h2>H — Final Surprise</h2>
+          <button class="back" data-back>← Back to Dashboard</button>
+        </div>
+
+        <div class="card">
+          <div class="revealBox">
+            <p style="margin:0; color:var(--muted); line-height:1.7;">
+              Press the button once. This is the “read this last” moment.
+            </p>
+            <div class="row">
+              <button class="btn" id="revealBtn">Read this last 🤍</button>
+              <span style="color:rgba(122,42,92,.85); font-weight:800; font-size:13px;">
+                (soft surprise, not scary)
+              </span>
+            </div>
+
+            <div class="secret" id="secretText">
+              If I could give you one gift, it would be this:
+              a love that feels safe.
+
+              I want to be the person who protects your heart — not adds weight to it.
+              So whenever you feel alone, come back here and remember:
+
+              You are loved.
+              You are worth effort.
+              And I’m not going anywhere.
+
+              Happy 6 months, my heart 🤍
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- I: MESSAGE BOX -->
+      <section class="screen" id="screen-I">
+        <div class="sectionTitle">
+          <h2>I — Your Message</h2>
+          <button class="back" data-back>← Back to Dashboard</button>
+        </div>
+
+        <div class="card">
+          <p style="margin:0 0 10px; color:var(--muted); line-height:1.7;">
+            Write anything. It saves on your phone/browser automatically (only on your device).
+          </p>
+
+          <textarea id="message" placeholder="Type here..."></textarea>
+
+          <div class="row">
+            <button class="btn" id="saveBtn">Save 🤍</button>
+            <button class="btn2" id="clearBtn">Clear</button>
+          </div>
+
+          <div class="hint" id="saveHint">Saved locally: yes (private to your device).</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---------- hearts background ----------
+    const hearts = document.getElementById("hearts");
+    const heartCount = 22;
+    for (let i=0;i<heartCount;i++){
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.style.left = Math.random()*100 + "vw";
+      h.style.animationDuration = (8 + Math.random()*10) + "s";
+      h.style.animationDelay = (-Math.random()*12) + "s";
+      h.style.opacity = (0.12 + Math.random()*0.22).toFixed(2);
+      const size = 10 + Math.random()*18;
+      h.style.width = size + "px";
+      h.style.height = size + "px";
+      hearts.appendChild(h);
+    }
+
+    // ---------- helpers ----------
+    const screens = {
+      intro: document.getElementById("screen-intro"),
+      dashboard: document.getElementById("screen-dashboard"),
+      A: document.getElementById("screen-A"),
+      B: document.getElementById("screen-B"),
+      F: document.getElementById("screen-F"),
+      H: document.getElementById("screen-H"),
+      I: document.getElementById("screen-I"),
+    };
+
+    function showScreen(name){
+      Object.values(screens).forEach(s => s.classList.remove("is-active"));
+      screens[name].classList.add("is-active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function toast(msg){
+      const t = document.getElementById("toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(()=> t.classList.remove("show"), 2200);
+    }
+
+    // ---------- navigation ----------
+    document.getElementById("goHomeBtn").addEventListener("click", ()=> showScreen("dashboard"));
+
+    document.querySelectorAll(".chip[data-go]").forEach(el=>{
+      el.addEventListener("click", ()=> showScreen(el.getAttribute("data-go")));
+    });
+
+    document.querySelectorAll("[data-back]").forEach(btn=>{
+      btn.addEventListener("click", ()=> showScreen("dashboard"));
+    });
+
+    document.querySelectorAll(".tile[data-open]").forEach(tile=>{
+      tile.addEventListener("click", ()=> showScreen(tile.getAttribute("data-open")));
+    });
+
+    // ---------- date text ----------
+    const d = new Date();
+    const opts = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+    document.getElementById("todayText").textContent = "Today: " + d.toLocaleDateString(undefined, opts);
+
+    // ---------- surprise reveal ----------
+    const secret = document.getElementById("secretText");
+    document.getElementById("revealBtn").addEventListener("click", ()=>{
+      secret.classList.toggle("is-open");
+      toast(secret.classList.contains("is-open") ? "Opened 🤍" : "Closed 🤍");
+    });
+
+    // ---------- message box local save ----------
+    const msg = document.getElementById("message");
+    const key = "sixMonths_message";
+    const saved = localStorage.getItem(key);
+    if (saved) msg.value = saved;
+
+    document.getElementById("saveBtn").addEventListener("click", ()=>{
+      localStorage.setItem(key, msg.value);
+      toast("Saved on your device 🤍");
+    });
+    document.getElementById("clearBtn").addEventListener("click", ()=>{
+      msg.value = "";
+      localStorage.removeItem(key);
+      toast("Cleared 🤍");
+    });
+    msg.addEventListener("input", ()=>{
+      // autosave quietly
+      localStorage.setItem(key, msg.value);
+    });
+
+    // ---------- easter eggs ----------
+    function sparkle(){
+      toast("✨ Easter egg found!");
+    }
+
+    document.getElementById("egg1").addEventListener("click", ()=>{
+      toast("Minecraft mode: ON ⛏️ (tiny block)");
+    });
+    document.getElementById("egg2").addEventListener("click", ()=>{
+      toast("Sea friend says hi 🌊🐟 (bubble vibes)");
+    });
+    document.getElementById("egg3").addEventListener("click", ()=>{
+      toast("Two cats approve 🐈‍⬛🐈");
+    });
+
+    // Dashboard easter egg bundle:
+    document.getElementById("eggDash").addEventListener("click", ()=>{
+      // little “combo” surprise: go to A with a message
+      sparkle();
+      setTimeout(()=> toast("Try tapping the little icons on the intro 😉"), 900);
+    });
+
+    // Extra: hidden keyboard easter egg
+    // Type: M C (for minecraft), P (for ponyo vibe), C A T
+    let buffer = "";
+    window.addEventListener("keydown", (e)=>{
+      const ch = (e.key || "").toLowerCase();
+      if (!/^[a-z]$/.test(ch)) return;
+      buffer = (buffer + ch).slice(-8);
+
+      if (buffer.includes("mc")){
+        toast("⛏️ Pixel world unlocked");
+      }
+      if (buffer.includes("ponyo") || buffer.includes("p")){
+        // keep it subtle; “p” triggers a small note
+        // not always, to avoid annoyance
+      }
+      if (buffer.includes("cat")){
+        toast("🐾 purr mission complete");
+      }
+    });
+  </script>
 </body>
 </html>
