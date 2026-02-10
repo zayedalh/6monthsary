@@ -1,1 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My First Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f0f14;
+      color: #ffffff;
+    }
+
+    header {
+      padding: 20px;
+      background: #15151d;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    nav a {
+      color: #aaa;
+      text-decoration: none;
+      margin-left: 15px;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .hero h2 {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      max-width: 500px;
+      margin: 0 auto 30px;
+      color: #ccc;
+    }
+
+    .btn {
+      background: #6c5ce7;
+      border: none;
+      color: white;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #8578ff;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #15151d;
+      font-size: 12px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>My Website</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <h2>Hello, I’m Live 🚀</h2>
+      <p>
+        This website is hosted directly from GitHub Pages.
+        No backend. No setup. Just code.
+      </p>
+      <button class="btn" onclick="alert('It works!')">
+        Click me
+      </button>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 – Hosted with GitHub Pages
+  </footer>
+
+</body>
+</html>
